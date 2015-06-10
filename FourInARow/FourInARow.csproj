@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClaimedSquare.cs" />
+    <Compile Include="Coordinate.cs" />
     <Compile Include="FourInARow.cs">
       <SubType>Form</SubType>
     </Compile>
