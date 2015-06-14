@@ -8,8 +8,33 @@ namespace FourInARow
 {
     class ClaimedSquare
     {
-        public Player Player { get; set; }
-        public Coordinate Coordinate { get; set; }
+        private Player player = new Player();
+        private Coordinate coordinate = new Coordinate();
 
+        public Player Player
+        {
+            get
+            {
+                return player;
+            }
+            set
+            {
+                player = value;
+            }
+
+        }
+
+        public Coordinate Coordinate
+        {
+            get
+            {
+                return coordinate;
+            }
+            set
+            {
+                coordinate = value;
+            }
+
+        }
     }
 }

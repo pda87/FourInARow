@@ -8,7 +8,32 @@ namespace FourInARow
 {
     class Coordinate
     {
-        public int XCoordinate { get; set; }
-        public int YCoordinate { get; set; }
+        private int xCoordinate = 0;
+        private int yCoordinate = 0;
+
+        public int XCoordinate
+        {
+            get
+            {
+                return xCoordinate;
+            }
+            set
+            {
+                xCoordinate = value;
+            }
+        }
+
+        public int YCoordinate
+        {
+            get
+            {
+                return yCoordinate;
+            }
+            set
+            {
+                yCoordinate = value;
+            }
+        }
+
     }
 }

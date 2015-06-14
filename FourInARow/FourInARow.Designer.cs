@@ -71,6 +71,7 @@
             this.sixTwo = new System.Windows.Forms.PictureBox();
             this.sixOne = new System.Windows.Forms.PictureBox();
             this.sixZero = new System.Windows.Forms.PictureBox();
+            this.restartButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.zeroZero)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zeroOne)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zeroTwo)).BeginInit();
@@ -544,11 +545,22 @@
             this.sixZero.TabStop = false;
             this.sixZero.Click += new System.EventHandler(this.column6Click);
             // 
+            // restartButton
+            // 
+            this.restartButton.Location = new System.Drawing.Point(320, 378);
+            this.restartButton.Name = "restartButton";
+            this.restartButton.Size = new System.Drawing.Size(75, 23);
+            this.restartButton.TabIndex = 43;
+            this.restartButton.Text = "Restart";
+            this.restartButton.UseVisualStyleBackColor = true;
+            this.restartButton.Click += new System.EventHandler(this.restartButton_Click);
+            // 
             // FourInARow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(464, 442);
+            this.Controls.Add(this.restartButton);
             this.Controls.Add(this.sixFive);
             this.Controls.Add(this.sixFour);
             this.Controls.Add(this.sixThree);
@@ -687,6 +699,7 @@
         private System.Windows.Forms.PictureBox sixTwo;
         private System.Windows.Forms.PictureBox sixOne;
         private System.Windows.Forms.PictureBox sixZero;
+        private System.Windows.Forms.Button restartButton;
 
 
     }

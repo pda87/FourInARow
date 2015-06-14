@@ -8,3 +8,15 @@ C:\Users\petedarden\documents\visual studio 2013\Projects\FourInARow\FourInARow\
 C:\Users\petedarden\documents\visual studio 2013\Projects\FourInARow\FourInARow\obj\Debug\FourInARow.csproj.GenerateResource.Cache
 C:\Users\petedarden\documents\visual studio 2013\Projects\FourInARow\FourInARow\obj\Debug\FourInARow.exe
 C:\Users\petedarden\documents\visual studio 2013\Projects\FourInARow\FourInARow\obj\Debug\FourInARow.pdb
+C:\Users\petedarden\documents\visual studio 2013\Projects\FourInARow\FourInARow\obj\Debug\FourInARow.csprojResolveAssemblyReference.cache
+C:\Users\Peter arden\Documents\Visual Studio 2013\Projects\FourInARow\FourInARow\bin\Debug\BlueCounter.png
+C:\Users\Peter arden\Documents\Visual Studio 2013\Projects\FourInARow\FourInARow\bin\Debug\RedCounter.png
+C:\Users\Peter arden\Documents\Visual Studio 2013\Projects\FourInARow\FourInARow\bin\Debug\FourInARow.exe.config
+C:\Users\Peter arden\Documents\Visual Studio 2013\Projects\FourInARow\FourInARow\bin\Debug\FourInARow.exe
+C:\Users\Peter arden\Documents\Visual Studio 2013\Projects\FourInARow\FourInARow\bin\Debug\FourInARow.pdb
+C:\Users\Peter arden\Documents\Visual Studio 2013\Projects\FourInARow\FourInARow\obj\Debug\FourInARow.csprojResolveAssemblyReference.cache
+C:\Users\Peter arden\Documents\Visual Studio 2013\Projects\FourInARow\FourInARow\obj\Debug\FourInARow.FourInARow.resources
+C:\Users\Peter arden\Documents\Visual Studio 2013\Projects\FourInARow\FourInARow\obj\Debug\FourInARow.Properties.Resources.resources
+C:\Users\Peter arden\Documents\Visual Studio 2013\Projects\FourInARow\FourInARow\obj\Debug\FourInARow.csproj.GenerateResource.Cache
+C:\Users\Peter arden\Documents\Visual Studio 2013\Projects\FourInARow\FourInARow\obj\Debug\FourInARow.exe
+C:\Users\Peter arden\Documents\Visual Studio 2013\Projects\FourInARow\FourInARow\obj\Debug\FourInARow.pdb

@@ -8,90 +8,222 @@ namespace FourInARow
 {
     class Game
     {
-        public Player RedPlayer { get; set; }
-        public Player BluePlayer { get; set; }
-        public Player CurrentPlayer { get; set; }
-        public List<ClaimedSquare> SquareTracker { get; set; }
-        public bool FourInARow { get; set; }
-        public string GameResult { get; set; }
+
+        private Player redPlayer = new Player();
+        private Player bluePlayer = new Player();
+        private Player currentPlayer = new Player();
+        private List<ClaimedSquare> squareTracker = new List<ClaimedSquare>();
+        private int bluePlayerColumn = 0;
+        private List<int> blueColumnsAvailable = new List<int>();
+        private bool fourInARow = false;
+        private string gameResult = string.Empty;
+
+        public Player RedPlayer
+        {
+            get
+            {
+                return redPlayer;
+            }
+            set
+            {
+                redPlayer = value;
+            }
+        }
+
+        public Player BluePlayer
+        {
+            get
+            {
+                return bluePlayer;
+            }
+            set
+            {
+                bluePlayer = value;
+            }
+        }
+
+        public Player CurrentPlayer
+        {
+            get
+            {
+                return currentPlayer;
+            }
+            set
+            {
+                currentPlayer = value;
+            }
+        }
+
+        public List<ClaimedSquare> SquareTracker
+        {
+            get
+            {
+                return squareTracker;
+            }
+            set
+            {
+                squareTracker = value;
+            }
+        }
+
+        public int BluePlayerColumn
+        {
+            get
+            {
+                return bluePlayerColumn;
+            }
+            set
+            {
+                bluePlayerColumn = value;
+            }
+        }
+
+        public List<int> BlueColumnsAvailable
+        {
+            get
+            {
+                return blueColumnsAvailable;
+            }
+            set
+            {
+                blueColumnsAvailable = value;
+            }
+        }
+
+        public bool FourInARow
+        {
+            get
+            {
+                return fourInARow;
+            }
+            set
+            {
+                fourInARow = value;
+            }
+        }
+
+        public string GameResult
+        {
+            get
+            {
+                return gameResult;
+            }
+            set
+            {
+                gameResult = value;
+            }
+        }
 
         public Game()
         {
-            this.RedPlayer = new Player();
-            this.RedPlayer.PlayerColour = PlayerColour.RedPlayer;
-            this.RedPlayer.CounterImageString = "RedCounter.png";
-            this.BluePlayer = new Player();
-            this.BluePlayer.PlayerColour = PlayerColour.BluePlayer;
-            this.BluePlayer.CounterImageString = "BlueCounter.png";
-            this.CurrentPlayer = BluePlayer;
-            this.SquareTracker = new List<ClaimedSquare>();
+            this.redPlayer.PlayerColour = PlayerColour.RedPlayer;
+            this.redPlayer.CounterImageString = "RedCounter.png";
+            this.bluePlayer.PlayerColour = PlayerColour.BluePlayer;
+            this.bluePlayer.CounterImageString = "BlueCounter.png";
+            this.currentPlayer = BluePlayer;
+            this.blueColumnsAvailable = new List<int>() { 0, 1, 2, 3, 4, 5, 6 };
+
+            Random random = new Random();
+            int shuffle = random.Next(1, 3);
+
+            if (shuffle == 1)
+            {
+                List<int> tempList = new List<int>() { 0, 1, 2, 3, 4, 5, 6 };
+                this.blueColumnsAvailable.Clear();
+
+                foreach (int column in tempList)
+                {
+                    int newValue = 6 - column;
+                    this.blueColumnsAvailable.Add(newValue);
+                }
+
+            }
+
+            else if (shuffle == 2)
+            {
+                this.blueColumnsAvailable = (from number in this.blueColumnsAvailable
+                                             select number).OrderBy(o => o.Equals(this.blueColumnsAvailable.Min())).ToList();
+            }
+
+            else if (shuffle == 3)
+            {
+                this.blueColumnsAvailable = (from number in this.blueColumnsAvailable
+                                             select number).OrderByDescending(o => o.Equals(this.blueColumnsAvailable.Max())).ToList();
+            }
+
+            this.PlayGame();
         }
 
         public void PlayGame()
         {
-            checkForFourInARow();
+            checkFourInARow();
 
-            if (this.CurrentPlayer == BluePlayer)
+            if (this.fourInARow)
             {
+                return;
+            }
 
-
-                this.CurrentPlayer = RedPlayer;
+            if (this.currentPlayer == BluePlayer)
+            {
+                this.currentPlayer = RedPlayer;
             }
 
             else
             {
-                this.CurrentPlayer = BluePlayer;
+                this.currentPlayer = BluePlayer;
+                bluePlayerTurn();
             }
         }
 
-        private void checkForFourInARow()
+        private void bluePlayerTurn()
+        {
+            Random random = new Random();
+            this.bluePlayerColumn = random.Next(0, this.blueColumnsAvailable.Count);
+            this.bluePlayerColumn = this.blueColumnsAvailable[this.bluePlayerColumn];
+
+            List<ClaimedSquare> bluePlayerSquares = this.squareTracker.Where(o => o.Player.Equals(this.bluePlayer)).ToList();
+            List<ClaimedSquare> redPlayerSquares = this.squareTracker.Where(o => o.Player.Equals(this.redPlayer)).ToList();
+
+            if (this.squareTracker.Count(sq => sq.Coordinate.XCoordinate.Equals(this.bluePlayerColumn)) == 6)
+            {
+                this.blueColumnsAvailable.RemoveAll(o => o.Equals(this.bluePlayerColumn));
+
+                for (int i = 0; i < this.blueColumnsAvailable.Count; i++)
+                {
+                    if (this.squareTracker.Count(sq => sq.Coordinate.XCoordinate.Equals(i)) <= 5)
+                    {
+                        this.bluePlayerColumn = i;
+                        this.bluePlayerColumn = this.blueColumnsAvailable[this.bluePlayerColumn];
+                        return;
+                    }
+                }
+            }
+
+
+            else
+            {
+                return;
+            }
+        }
+
+        private void checkFourInARow()
         {
             this.GameResult = string.Empty;
 
-            List<ClaimedSquare> playerSquaresHorizontal = this.SquareTracker.Where(o => o.Player.Equals(this.CurrentPlayer))/*OrderBy(o => o.Coordinate.XCoordinate)*/.ToList();
+            List<ClaimedSquare> redPlayerSquares = this.squareTracker.Where(o => o.Player.Equals(this.redPlayer)).ToList();
+            List<ClaimedSquare> bluePlayerSquares = this.squareTracker.Where(o => o.Player.Equals(this.bluePlayer)).ToList();
 
-            checkFourInARowHorizontal(playerSquaresHorizontal);
+            checkFourInARowHorizontal(redPlayerSquares);
+            checkFourInARowHorizontal(bluePlayerSquares);
 
-            //List<ClaimedSquare> playerSquaresVertical = this.SquareTracker.Where(o => o.Player.Equals(this.CurrentPlayer))./*OrderBy(o => o.Coordinate.YCoordinate).*/ToList();
+            checkFourInARowVertical(redPlayerSquares);
+            checkFourInARowVertical(bluePlayerSquares);
 
-            checkFourInARowVertical(playerSquaresHorizontal);
-            checkFourInARowRightAndUp(playerSquaresHorizontal);
-            checkFourInARowLeftAndUp(playerSquaresHorizontal);
+            checkFourInARowDiagonal(redPlayerSquares, 1, 2, 3);
+            checkFourInARowDiagonal(bluePlayerSquares, 1, 2, 3);
 
-
-        }
-
-        private void checkFourInARowLeftAndUp(List<ClaimedSquare> playerSquares)
-        {
-            foreach (ClaimedSquare claimedSquare in playerSquares)
-            {
-                if (playerSquares.Count(sq => sq.Coordinate.XCoordinate.Equals(claimedSquare.Coordinate.XCoordinate - 1) & sq.Coordinate.YCoordinate.Equals(claimedSquare.Coordinate.YCoordinate + 1)) == 1)
-                    if (playerSquares.Count(sq => sq.Coordinate.XCoordinate.Equals(claimedSquare.Coordinate.XCoordinate - 2) & sq.Coordinate.YCoordinate.Equals(claimedSquare.Coordinate.YCoordinate + 2)) == 1)
-                        if (playerSquares.Count(sq => sq.Coordinate.XCoordinate.Equals(claimedSquare.Coordinate.XCoordinate - 3) & sq.Coordinate.YCoordinate.Equals(claimedSquare.Coordinate.YCoordinate + 3)) == 1)
-                        {
-                            this.FourInARow = true;
-                            this.GameResult = "FOUR IN A ROW! The winner is: " + this.CurrentPlayer.PlayerColour.ToString() + "!";
-                            return;
-                        }
-            }
-        }
-
-        private void checkFourInARowRightAndUp(List<ClaimedSquare> playerSquares)
-        {
-            foreach (ClaimedSquare claimedSquare in playerSquares)
-            {
-                if (playerSquares.Count(sq => sq.Coordinate.XCoordinate.Equals(claimedSquare.Coordinate.XCoordinate + 1) 
-                    & sq.Coordinate.YCoordinate.Equals(claimedSquare.Coordinate.YCoordinate + 1)) == 1)
-                    if (playerSquares.Count(sq => sq.Coordinate.XCoordinate.Equals(claimedSquare.Coordinate.XCoordinate + 2) 
-                        & sq.Coordinate.YCoordinate.Equals(claimedSquare.Coordinate.YCoordinate + 2)) == 1)
-                        if (playerSquares.Count(sq => sq.Coordinate.XCoordinate.Equals(claimedSquare.Coordinate.XCoordinate + 3) 
-                            & sq.Coordinate.YCoordinate.Equals(claimedSquare.Coordinate.YCoordinate + 3)) == 1)
-                        {
-                            this.FourInARow = true;
-                            this.GameResult = "FOUR IN A ROW! The winner is: " + this.CurrentPlayer.PlayerColour.ToString() + "!";
-                            return;
-                        }
-            }
+            checkFourInARowDiagonal(redPlayerSquares, -1, -2, -3);
+            checkFourInARowDiagonal(bluePlayerSquares, -1, -2, -3);
         }
 
         private void checkFourInARowHorizontal(List<ClaimedSquare> playerSquares)
@@ -111,7 +243,6 @@ namespace FourInARow
                         }
             }
         }
-
         private void checkFourInARowVertical(List<ClaimedSquare> playerSquares)
         {
             foreach (ClaimedSquare claimedSquare in playerSquares)
@@ -129,8 +260,22 @@ namespace FourInARow
                         }
             }
         }
-
+        private void checkFourInARowDiagonal(List<ClaimedSquare> playerSquares, int firstNumber, int secondNumber, int thirdNumber)
+        {
+            foreach (ClaimedSquare claimedSquare in playerSquares)
+            {
+                if (playerSquares.Count(sq => sq.Coordinate.XCoordinate.Equals(claimedSquare.Coordinate.XCoordinate + firstNumber)
+                    & sq.Coordinate.YCoordinate.Equals(claimedSquare.Coordinate.YCoordinate + 1)) == 1)
+                    if (playerSquares.Count(sq => sq.Coordinate.XCoordinate.Equals(claimedSquare.Coordinate.XCoordinate + secondNumber)
+                        & sq.Coordinate.YCoordinate.Equals(claimedSquare.Coordinate.YCoordinate + 2)) == 1)
+                        if (playerSquares.Count(sq => sq.Coordinate.XCoordinate.Equals(claimedSquare.Coordinate.XCoordinate + thirdNumber)
+                            & sq.Coordinate.YCoordinate.Equals(claimedSquare.Coordinate.YCoordinate + 3)) == 1)
+                        {
+                            this.FourInARow = true;
+                            this.GameResult = "FOUR IN A ROW! The winner is: " + this.CurrentPlayer.PlayerColour.ToString() + "!";
+                            return;
+                        }
+            }
+        }
     }
-
-
 }
